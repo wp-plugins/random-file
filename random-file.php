@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Random File
-Version: 0.9
+Version: 1.0
 Plugin URI: http://www.coffee2code.com/wp-plugins/
 Author: Scott Reilly
 Author URI: http://www.coffee2code.com
@@ -21,7 +21,7 @@ Copy and paste the the code ( http://www.coffee2code.com/wp-plugins/random-file.
 Notes:
 
 - If you want to actually display the name of the random file, be sure to 'echo' the results:
-<?php echo random_file('/random'); ?>
+<?php echo c2c_random_file('/random'); ?>
 
 - The directory of random files must exist at the directory structure level of your WordPress
 installation or below. (i.e., if your site is installed on your server at
@@ -33,10 +33,10 @@ that as its base... so $dir='randomfiles' would be assumed to actually be:
 
 - $extensions can be a space-separated list of extensions (case insensitive), i.e. 'jpg gif png jpeg'
 
-- Unless you limit the file search to only include a particular $extension, all files in
+- Unless you limit the file search to only include a particular extension (via $extensions argument), all files in
 the specified $dir will be under consideration for random selection
 
-- The reference to the randomly selected file can be returned in one of three ways:
+- The reference to the randomly selected file can be returned in one of four ways:
 [Assume your WordPress installation is at http://www.yoursite.org/journal/ and you've
 invoked random_file('random/', 'txt', $reftype)]
 
@@ -56,46 +56,44 @@ $reftype = 'url'
 http://www.yoursite.org/journal/random/randomfile.txt
 [If you desire the use of full URL, such as for a A HREF= or IMG SRC= link.]
 
+$reftype = 'filename'
+=> The filename of the random file:
+randomefile.txt
+
 - Can be run inside or outside of "the loop."
 
 Examples:
 
 // Include random logo or image on your site:
-<img alt="logo" class="logo" src="<?php echo random_file('/wp-images/logos/'); ?>" />
+<img alt="logo" class="logo" src="<?php echo c2c_random_file('/wp-images/logos/'); ?>" />
 
 // Insert text from a random file (i.e. for random multi-line quotes):
 <blockquote class='todayquote'>
-   <?php virtual(random_file('/quotes/', 'txt')); ?>
+   <?php virtual(c2c_random_file('/quotes/', 'txt')); ?>
 </blockquote>
 
 // If you wanted to source a random .php file
-<?php include(random_file('/randomphp', 'php')); ?>
+<?php include(c2c_random_file('/randomphp', 'php')); ?>
 
 */
 
 /*
-Copyright (c) 2004, Scott Reilly
-Released under the BSD License
-All rights reserved.
+Copyright (c) 2004-2005 by Scott Reilly (aka coffee2code)
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following 
-conditions are met:
-   
-     * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
-disclaimer in the documentation and/or other materials provided with the distribution.
-     * Neither the name of coffee2code.com nor the names of its contributors may be used to endorse or promote products derived from 
-this software without specific prior written permission.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation 
+files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, 
+modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the 
+Software is furnished to do so, subject to the following conditions:
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT 
-NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL 
-THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
-HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-function random_file ($dir, $extensions='', $reftype='relative') {
+function c2c_random_file ($dir, $extensions='', $reftype='relative') {
 	$files = array();
 	$i = -1;
 	$pattern = '/.*';
@@ -119,12 +117,14 @@ function random_file ($dir, $extensions='', $reftype='relative') {
 		return get_settings('siteurl') . '/' . $dir . $files[$rand];
 	} elseif ('absolute' == $reftype) {
 		return ABSPATH . $dir . $files[$rand];
+	} elseif ('filename' == $reftype) {
+		return $files[$rand];
 	} else {
 		// Need to obtain location relative to root of domain (in case site is based out of subdirectory)
 		preg_match("/^(https?:\/\/)?([^\/]+)\/?(.+)?$/", get_settings('siteurl'), $matches);
 		$relpath = isset($matches[3]) ? '/' . $matches[3] : '';
 		return $relpath . '/' . $dir . $files[$rand];
 	}
-} //end random_file()
+} //end c2c_random_file()
 
 ?>
