@@ -3,9 +3,9 @@ Contributors: coffee2code
 Donate link: http://coffee2code.com/donate
 Tags: random, file, coffee2code
 Requires at least: 1.5
-Tested up to: 2.8
-Stable tag: 1.5
-Version: 1.5
+Tested up to: 2.8.2
+Stable tag: 1.5.1
+Version: 1.5.1
 
 Retrieve the name, path, or link to a randomly chosen file in a specified directory.
 
@@ -99,4 +99,27 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 
 No.  This plugin only selects a random file when the page is loaded.  Once loaded, it does not currently add any dynamic functionality to automatically retrieve another random file on its own.
 
+== Changelog ==
 
+= 1.5.1 =
+* Fixed: missing '/' in path construction for reftype 'absolute'
+
+= 1.5 =
+* Added new reftype of 'hyperlink' to return the filename of the random file hyperlinked to that file
+* Added error checking to avoid error when referenced directory does not exist
+* Added error checking for when there is an error opening a directory
+* Explicit handling of reftype 'absolute' in the code was actually supposed to be 'serverabsolute'
+* Minor code tweaks
+* Tweaked installation instructions
+* Added readme.txt
+* Noted and tested compatibility with WP 2.3.3 through 2.8
+
+= 1.0 =
+* Renamed function from random_file() to c2c_random_file()
+* Added new reftype of 'filename'
+* Added optional array argument $exceptions for files not to be considered in random file selection
+* Updated license and examples
+* Verified that plugin works in WP 1.5 (and still works in WP 1.2)
+
+= 0.9 =
+* Initial release

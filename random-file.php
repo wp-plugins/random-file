@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Random File
-Version: 1.5
+Version: 1.5.1
 Plugin URI: http://coffee2code.com/wp-plugins/random-file
 Author: Scott Reilly
 Author URI: http://coffee2code.com
@@ -133,7 +133,7 @@ function c2c_random_file( $dir, $extensions='', $reftype='relative', $exclusions
 	if ( 'url' == $reftype ) {
 		return get_settings('siteurl') . '/' . $dir . $random_file;
 	} elseif ( 'absolute' == $reftype ) {
-		return $abs_dir . $random_file;	/* could also do realpath($random_file); */
+		return $abs_dir . '/' . $random_file;	/* could also do realpath($random_file); */
 	} elseif ( 'filename' == $reftype ) {
 		return $random_file;
 	} elseif ( 'hyperlink' == $reftype ) {
