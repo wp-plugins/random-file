@@ -3,9 +3,9 @@ Contributors: coffee2code
 Donate link: http://coffee2code.com/donate
 Tags: random, file, coffee2code
 Requires at least: 1.5
-Tested up to: 2.8.2
-Stable tag: 1.5.1
-Version: 1.5.1
+Tested up to: 2.9.1
+Stable tag: 1.5.2
+Version: 1.5.2
 
 Retrieve the name, path, or link to a randomly chosen file in a specified directory.
 
@@ -22,11 +22,11 @@ Notes:
 
 * Unless you limit the file search to only include a particular extension (via `$extensions` argument), all files in the specified `$dir` will be under consideration for random selection
 
-* Can be run inside or outside of "the loop."
+* Can be run inside or outside of "the loop"
 
 == Installation ==
 
-1. Unzip `random-file.zip` inside the `/wp-content/plugins/` directory, or upload `random-file.php` to `/wp-content/plugins/`
+1. Unzip `random-file.zip` inside the `/wp-content/plugins/` directory (or install via the built-in WordPress plugin installer)
 1. Activate the plugin through the 'Plugins' admin menu in WordPress
 1. Make use of the `c2c_random_file()` template function in your template (see examples below).
 
@@ -86,6 +86,7 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 `<img alt="logo" class="logo" src="<?php echo c2c_random_file('/wp-content/images/logos/'); ?>" />`
 
 * Insert text from a random file (i.e. for random multi-line quotes) (Apache web-server only, probably):
+
 `<blockquote class='todayquote'>
    <?php virtual(c2c_random_file('/quotes/', 'txt')); ?>
 </blockquote>`
@@ -100,6 +101,12 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 No.  This plugin only selects a random file when the page is loaded.  Once loaded, it does not currently add any dynamic functionality to automatically retrieve another random file on its own.
 
 == Changelog ==
+
+= 1.5.2 =
+* Add PHPDoc documentation
+* Note compatibility with WP 2.9+
+* Update copyright date
+* Update readme.txt
 
 = 1.5.1 =
 * Fixed: missing '/' in path construction for reftype 'absolute'

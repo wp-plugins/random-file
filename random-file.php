@@ -1,7 +1,12 @@
 <?php
+/**
+ * @package Random_File
+ * @author Scott Reilly
+ * @version 1.5.2
+ */
 /*
 Plugin Name: Random File
-Version: 1.5.1
+Version: 1.5.2
 Plugin URI: http://coffee2code.com/wp-plugins/random-file
 Author: Scott Reilly
 Author URI: http://coffee2code.com
@@ -9,7 +14,7 @@ Description: Retrieve the name, path, or link to a randomly chosen file in a spe
 
 Useful for displaying random images/logos or including text from random files onto your site (writing excerpts, multi-line quotes, etc).
 
-Compatible with WordPress 1.5+, 2.0+, 2.1+, 2.2+, 2.3+, 2.5+, 2.6+, 2.7+, 2.8+.
+Compatible with WordPress 1.5+, 2.0+, 2.1+, 2.2+, 2.3+, 2.5+, 2.6+, 2.7+, 2.8+, 2.9+.
 
 =>> Read the accompanying readme.txt file for more information.  Also, visit the plugin's homepage
 =>> for more information and the latest updates
@@ -17,7 +22,7 @@ Compatible with WordPress 1.5+, 2.0+, 2.1+, 2.2+, 2.3+, 2.5+, 2.6+, 2.7+, 2.8+.
 Installation:
 
 1. Download the file http://coffee2code.com/wp-plugins/random-file.zip and unzip it into your
-/wp-content/plugins/ directory.
+/wp-content/plugins/ directory (or install via the built-in WordPress plugin installer).
 2. Activate the plugin through the 'Plugins' admin menu in WordPress
 3. Make use of the c2c_random_file() template function in your template (see examples below).
 
@@ -88,7 +93,7 @@ Examples:
 */
 
 /*
-Copyright (c) 2004-2009 by Scott Reilly (aka coffee2code)
+Copyright (c) 2004-2010 by Scott Reilly (aka coffee2code)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation 
 files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, 
@@ -103,7 +108,37 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRA
 IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-function c2c_random_file( $dir, $extensions='', $reftype='relative', $exclusions='' ) {
+/**
+ * Retrieves the name, path, or link to a randomly chosen file in a specified directory.
+ *
+ * Details on the acceptable values for $reftype:
+ *
+ *   'relative' => A location relative to the primary domain:
+ *      /journal/random/randomfile.txt
+ *      [This is the default setting as it is the most applicable.  Relative referencing is necessary if
+ *      the random file is to be used as an argument to include() or virtual().  It's also a valid way
+ *      to reference a file for A HREF= and IMG SRC= linking.]
+ *
+ *   'absolute' => An absolute location relative to the root of the server's file system:
+ *      /usr/local/htdocs/yoursite/www/journal/random/randomfile.txt
+ *
+ *   'url' => The URL of the random file:
+ *      http://www.yoursite.org/journal/random/randomfile.txt
+ *      [If you desire the use of full URL, such as for a A HREF= or IMG SRC= link.]
+ *
+ *   'filename' => The filename of the random file:
+ *      randomefile.txt
+ *
+ *   'hyperlink' => The filename of the random file hyperlinked to that random file:
+ *      <a href='http://yoursite.org/journal/random/randomfile.txt' title='randomfile.txt'>randomfile.txt</a>
+ *
+ * @param string $dir The directory (relative to the root of the site) containing the files to be random chosen from
+ * @param string $extensions (optional) A space-separated list of extensions, one of which the chosen file must have (case insensitive). Default is ''.
+ * @param string $reftype (optional) One of: absolute, filename, hyperlink, relative, or url.  Default is 'relative'.
+ * @param array $exclusions (optional) Filenames to exclude from consideration as a random file
+ * @return string The random file chosen (if possible)
+ */
+function c2c_random_file( $dir, $extensions = '', $reftype = 'relative', $exclusions = array() ) {
 	$files = array();
 	$i = -1;
 	$pattern = '/.*';
