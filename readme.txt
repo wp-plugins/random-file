@@ -3,9 +3,9 @@ Contributors: coffee2code
 Donate link: http://coffee2code.com/donate
 Tags: random, file, coffee2code
 Requires at least: 1.5
-Tested up to: 3.0.1
-Stable tag: 1.6
-Version: 1.6
+Tested up to: 3.2
+Stable tag: 1.6.1
+Version: 1.6.1
 
 Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
