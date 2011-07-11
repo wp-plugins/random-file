@@ -25,6 +25,8 @@ Notes:
 
 * Can be run inside or outside of "the loop"
 
+Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Author Homepage](http://coffee2code.com)
+
 
 == Installation ==
 
@@ -110,17 +112,19 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 
 * Include random logo or image on your site:
 
-`<img alt="logo" class="logo" src="<?php echo c2c_random_file('/wp-content/images/logos/'); ?>" />`
+    `<img alt="logo" class="logo" src="<?php echo c2c_random_file('/wp-content/images/logos/'); ?>" />`
 
 * Insert text from a random file (i.e. for random multi-line quotes) (Apache web-server only, probably):
 
-`<blockquote class="todayquote">
+    `
+<blockquote class="todayquote">
    <?php virtual(c2c_random_file("/quotes/", "txt")); ?>
-</blockquote>`
+</blockquote>
+`
 
 * If you wanted to source a random .php file:
 
-	`<?php include(c2c_random_file('/randomphp', 'php')); ?>`
+    `<?php include(c2c_random_file('/randomphp', 'php')); ?>`
 
 * List 5 random files:
 
@@ -177,6 +181,13 @@ Do:
 
 == Changelog ==
 
+= 1.6.1 =
+* Note compatibility through WP 3.2+
+* Minor code formatting changes (spacing)
+* Minor readme.txt formatting changes
+* Add plugin homepage and author links in description in readme.txt
+* Update copyright date (2011)
+
 = 1.6 =
 * Add c2c_random_files() to retrieve array of random unique files
 * Add hooks 'c2c_random_file' (filter) and 'c2c_random_files' (filter) to respond to the function of the same name so that users can use the apply_filters() notation for invoking template tags
@@ -220,6 +231,9 @@ Do:
 
 
 == Upgrade Notice ==
+
+= 1.6.1 =
+Trivial update: noted compatibility through WP 3.2+
 
 = 1.6 =
 Feature update. Highlights: added c2c_random_files() to retrieve array of random unique files; added hooks to allow customizations; verified WP 3.0 compatibility.

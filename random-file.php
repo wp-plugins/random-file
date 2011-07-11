@@ -2,26 +2,32 @@
 /**
  * @package Random_File
  * @author Scott Reilly
- * @version 1.6
+ * @version 1.6.1
  */
 /*
 Plugin Name: Random File
-Version: 1.6
+Version: 1.6.1
 Plugin URI: http://coffee2code.com/wp-plugins/random-file/
 Author: Scott Reilly
 Author URI: http://coffee2code.com
 Description: Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
-Compatible with WordPress 1.5+, 2.0+, 2.1+, 2.2+, 2.3+, 2.5+, 2.6+, 2.7+, 2.8+, 2.9+, 3.0+.
+Compatible with WordPress 1.5+, 2.0+, 2.1+, 2.2+, 2.3+, 2.5+, 2.6+, 2.7+, 2.8+, 2.9+, 3.0+, 3.1+, 3.2+.
 
 =>> Read the accompanying readme.txt file for instructions and documentation.
 =>> Also, visit the plugin's homepage for additional information and updates.
 =>> Or visit: http://wordpress.org/extend/plugins/random-file/
 
+TODO:
+	* Add widget
+	* Facilitate running a randomly chosen .php file
+	* Facilitate inlining randomly chosen file (any, or at least: .txt, .css, .js, .php, .html)
+	* Facilitate displaying randomly chosen image
+
 */
 
 /*
-Copyright (c) 2004-2010 by Scott Reilly (aka coffee2code)
+Copyright (c) 2004-2011 by Scott Reilly (aka coffee2code)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
 files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
@@ -36,7 +42,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRA
 IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-if ( !function_exists( 'c2c_random_file' ) ):
+if ( ! function_exists( 'c2c_random_file' ) ):
 /**
  * Retrieves the name, path, or link to a randomly chosen file in a specified
  *  directory.
@@ -75,13 +81,13 @@ function c2c_random_file( $dir, $extensions = '', $reftype = 'relative', $exclus
 	$i = -1;
 	$pattern = '/.*';
 
-	if ( !empty( $extensions ) )
+	if ( ! empty( $extensions ) )
 		$pattern .= '\.(' . implode( '|', explode( ' ', $extensions ) ) . ')';
 	$pattern .= '$/i';
 
 	$dir = trim( $dir, '/' );
 	$abs_dir = ABSPATH . $dir;
-	if ( !file_exists( $abs_dir ) )
+	if ( ! file_exists( $abs_dir ) )
 		return;
 
 	$handle = @opendir( $abs_dir );
@@ -91,7 +97,7 @@ function c2c_random_file( $dir, $extensions = '', $reftype = 'relative', $exclus
 	$exclusions = empty( $exclusions ) ? array() : array_map( 'basename', $exclusions );
 
 	while ( false != ( $file = readdir( $handle ) ) ) {
-		if ( is_file( $abs_dir . '/' . $file ) && preg_match( $pattern, $file ) && !in_array( $file, $exclusions ) ) {
+		if ( is_file( $abs_dir . '/' . $file ) && preg_match( $pattern, $file ) && ! in_array( $file, $exclusions ) ) {
 			$files[] = $file;
 			++$i;
 		}
@@ -105,7 +111,7 @@ function c2c_random_file( $dir, $extensions = '', $reftype = 'relative', $exclus
 	mt_srand( (double) microtime() * 1000000 );
 	$rand = mt_rand( 0, $i );
 
-	if ( !empty( $dir ) )
+	if ( ! empty( $dir ) )
 		$dir .= '/';
 
 	$random_file = $files[$rand];
@@ -133,7 +139,7 @@ add_filter( 'c2c_random_file', 'c2c_random_file', 10, 4 );
 endif;
 
 
-if ( !function_exists( 'c2c_random_files' ) ) :
+if ( ! function_exists( 'c2c_random_files' ) ) :
 /**
  * Retrieves the name, path, or link to a specified number of randomly chosen
  * files in a specified directory.
