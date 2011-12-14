@@ -3,9 +3,9 @@ Contributors: coffee2code
 Donate link: http://coffee2code.com/donate
 Tags: random, file, coffee2code
 Requires at least: 1.5
-Tested up to: 3.2
-Stable tag: 1.6.1
-Version: 1.6.1
+Tested up to: 3.3
+Stable tag: 1.6.2
+Version: 1.6.2
 
 Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
@@ -25,7 +25,7 @@ Notes:
 
 * Can be run inside or outside of "the loop"
 
-Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Author Homepage](http://coffee2code.com)
+Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Plugin Directory Page](http://wordpress.org/extend/plugins/random-file/) | [Author Homepage](http://coffee2code.com)
 
 
 == Installation ==
@@ -181,6 +181,12 @@ Do:
 
 == Changelog ==
 
+= 1.6.2 =
+* Note compatibility through WP 3.3+
+* Add link to plugin directory page to readme.txt
+* Add Upgrade Notice section to readme.txt
+* Update copyright date (2012)
+
 = 1.6.1 =
 * Note compatibility through WP 3.2+
 * Minor code formatting changes (spacing)
@@ -231,6 +237,9 @@ Do:
 
 
 == Upgrade Notice ==
+
+= 1.6.2 =
+Trivial update: noted compatibility through WP 3.3+
 
 = 1.6.1 =
 Trivial update: noted compatibility through WP 3.2+
