@@ -2,10 +2,12 @@
 Contributors: coffee2code
 Donate link: http://coffee2code.com/donate
 Tags: random, file, coffee2code
-Requires at least: 1.5
-Tested up to: 3.3
-Stable tag: 1.6.2
-Version: 1.6.2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires at least: 2.8
+Tested up to: 3.4
+Stable tag: 1.7
+Version: 1.7
 
 Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
@@ -181,6 +183,18 @@ Do:
 
 == Changelog ==
 
+= 1.7 =
+* Use DIRECTORY_SEPARATOR instead of hardcoding '/' when determining absolute path
+* Properly escape the attributes for the link markup
+* preg_quote() the extensions
+* Cast $exclusions arg to array before use
+* Re-license as GPLv2 or later (from X11)
+* Add 'License' and 'License URI' header tags to readme.txt and plugin file
+* Minor code reformatting (spacing)
+* Remove ending PHP close tag
+* Note compatibility through WP 3.4+
+* Drop support for versions of WP older than 2.8
+
 = 1.6.2 =
 * Note compatibility through WP 3.3+
 * Add link to plugin directory page to readme.txt
@@ -237,6 +251,9 @@ Do:
 
 
 == Upgrade Notice ==
+
+= 1.7 =
+Recommended minor update: improved compatibility and data sanitization; noted compatibility through WP 3.4+; explicitly stated license
 
 = 1.6.2 =
 Trivial update: noted compatibility through WP 3.3+
