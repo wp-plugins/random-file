@@ -2,11 +2,11 @@
 /**
  * @package Random_File
  * @author Scott Reilly
- * @version 1.7
+ * @version 1.7.1
  */
 /*
 Plugin Name: Random File
-Version: 1.7
+Version: 1.7.1
 Plugin URI: http://coffee2code.com/wp-plugins/random-file/
 Author: Scott Reilly
 Author URI: http://coffee2code.com/
@@ -14,7 +14,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Description: Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
-Compatible with WordPress 2.8 through 3.4+.
+Compatible with WordPress 2.8 through 3.5+.
 
 =>> Read the accompanying readme.txt file for instructions and documentation.
 =>> Also, visit the plugin's homepage for additional information and updates.
@@ -29,7 +29,7 @@ TODO:
 */
 
 /*
-	Copyright (c) 2004-2012 by Scott Reilly (aka coffee2code)
+	Copyright (c) 2004-2013 by Scott Reilly (aka coffee2code)
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -45,6 +45,8 @@ TODO:
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+defined( 'ABSPATH' ) or die();
 
 if ( ! function_exists( 'c2c_random_file' ) ):
 /**
