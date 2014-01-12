@@ -2,11 +2,11 @@
 /**
  * @package Random_File
  * @author Scott Reilly
- * @version 1.7.1
+ * @version 1.8
  */
 /*
 Plugin Name: Random File
-Version: 1.7.1
+Version: 1.8
 Plugin URI: http://coffee2code.com/wp-plugins/random-file/
 Author: Scott Reilly
 Author URI: http://coffee2code.com/
@@ -14,11 +14,11 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Description: Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
-Compatible with WordPress 2.8 through 3.5+.
+Compatible with WordPress 2.8 through 3.8+.
 
 =>> Read the accompanying readme.txt file for instructions and documentation.
 =>> Also, visit the plugin's homepage for additional information and updates.
-=>> Or visit: http://wordpress.org/extend/plugins/random-file/
+=>> Or visit: http://wordpress.org/plugins/random-file/
 
 TODO:
 	* Add widget
@@ -29,7 +29,7 @@ TODO:
 */
 
 /*
-	Copyright (c) 2004-2013 by Scott Reilly (aka coffee2code)
+	Copyright (c) 2004-2014 by Scott Reilly (aka coffee2code)
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -38,7 +38,7 @@ TODO:
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
@@ -49,6 +49,7 @@ TODO:
 defined( 'ABSPATH' ) or die();
 
 if ( ! function_exists( 'c2c_random_file' ) ):
+
 /**
  * Retrieves the name, path, or link to a randomly chosen file in a specified
  *  directory.
@@ -76,29 +77,37 @@ if ( ! function_exists( 'c2c_random_file' ) ):
  *   'hyperlink' => The filename of the random file hyperlinked to that random file:
  *      <a href='http://yoursite.org/journal/random/randomfile.txt' title='randomfile.txt'>randomfile.txt</a>
  *
- * @param string $dir The directory (relative to the root of the site) containing the files to be random chosen from
- * @param string $extensions (optional) A space-separated list of extensions, one of which the chosen file must have (case insensitive). Default is ''.
- * @param string $reftype (optional) One of: absolute, filename, hyperlink, relative, or url.  Default is 'relative'.
- * @param array $exclusions (optional) Filenames to exclude from consideration as a random file
+ * @param  string $dir        The directory (relative to the root of the site) containing the files to be random chosen from
+ * @param  string $extensions (optional) A space-separated list of extensions, one of which the chosen file must have (case insensitive). Default is ''.
+ * @param  string $reftype    (optional) One of: absolute, filename, hyperlink, relative, or url.  Default is 'relative'.
+ * @param  array  $exclusions (optional) Filenames to exclude from consideration as a random file
  * @return string The random file chosen (if possible)
  */
 function c2c_random_file( $dir, $extensions = '', $reftype = 'relative', $exclusions = array() ) {
-	$files = array();
-	$i = -1;
+	$files   = array();
+	$i       = -1;
 	$pattern = '/.*';
 
-	if ( ! empty( $extensions ) )
-		$pattern .= '\.(' . preg_quote( implode( '|', explode( ' ', $extensions ) ), '/' ) . ')';
+	if ( ! empty( $extensions ) ) {
+		$exts = array();
+		foreach ( explode( ' ', $extensions ) as $ext ) {
+			$exts[] = preg_quote( $ext, '/' );
+		}
+		$pattern .= '\.(' . implode( '|', $exts ) . ')';
+	}
 	$pattern .= '$/i';
 
-	$dir = trim( $dir, '/' );
+	$dir     = trim( $dir, '/' );
 	$abs_dir = ABSPATH . $dir;
-	if ( ! file_exists( $abs_dir ) )
+
+	if ( ! file_exists( $abs_dir ) ) {
 		return;
+	}
 
 	$handle = @opendir( $abs_dir );
-	if ( false === $handle )
+	if ( false === $handle ) {
 		return;
+	}
 
 	$exclusions = empty( $exclusions ) ? array() : array_map( 'basename', (array) $exclusions );
 
@@ -111,30 +120,40 @@ function c2c_random_file( $dir, $extensions = '', $reftype = 'relative', $exclus
 
 	closedir( $handle );
 
-	if ( empty( $files ) )
+	if ( empty( $files ) ) {
 		return;
+	}
 	
 	mt_srand( (double) microtime() * 1000000 );
 	$rand = mt_rand( 0, $i );
 
-	if ( ! empty( $dir ) )
+	if ( ! empty( $dir ) ) {
 		$dir .= '/';
+	}
 
-	$random_file = $files[$rand];
+	$random_file = $files[ $rand ];
 
-	if ( 'url' == $reftype )
-		return get_option( 'siteurl' ) . '/' . $dir . $random_file;
+	if ( in_array( $reftype, array( 'hyperlink', 'url' ) ) ) {
+		$url = trailingslashit( get_option( 'siteurl' ) ) . $dir . $random_file;
+	}
 
-	if ( 'absolute' == $reftype )
+	if ( 'url' == $reftype ) {
+		return $url;
+	}
+
+	if ( 'absolute' == $reftype ) {
 		return $abs_dir . DIRECTORY_SEPARATOR . $random_file;	/* could also do realpath($random_file); */
+	}
 
-	if ( 'filename' == $reftype )
+	if ( 'filename' == $reftype ) {
 		return $random_file;
+	}
 
 	if ( 'hyperlink' == $reftype ) {
-		$url = get_option( 'siteurl' ) . '/' . $dir . $random_file;
 		return '<a href="' . esc_url( $url ) . '" title="' . esc_attr( $random_filename ) . '">' . $random_file . '</a>';
 	}
+
+	// Else this is handling 'relative' == $reftype
 
 	// Need to obtain location relative to root of domain (in case site is based out of subdirectory)
 	preg_match( "/^(https?:\/\/)?([^\/]+)\/?(.+)?$/", get_option( 'siteurl' ), $matches );
@@ -142,11 +161,14 @@ function c2c_random_file( $dir, $extensions = '', $reftype = 'relative', $exclus
 
 	return $relpath . '/' . $dir . $random_file;
 } //end c2c_random_file()
+
 add_filter( 'c2c_random_file', 'c2c_random_file', 10, 4 );
+
 endif;
 
 
 if ( ! function_exists( 'c2c_random_files' ) ) :
+
 /**
  * Retrieves the name, path, or link to a specified number of randomly chosen
  * files in a specified directory.
@@ -158,25 +180,28 @@ if ( ! function_exists( 'c2c_random_files' ) ) :
  * (see docs for c2c_random_file() for more details regarding values for
  * arguments)
  *
- * @param int $number The number of random files to select from the specified directory
- * @param string $dir The directory (relative to the root of the site) containing the files to be random chosen from
- * @param string $extensions (optional) A space-separated list of extensions, one of which the chosen file must have (case insensitive). Default is ''.
- * @param string $reftype (optional) One of: absolute, filename, hyperlink, relative, or url.  Default is 'relative'.
- * @param array $exclusions (optional) Filenames to exclude from consideration as a random file
- * @return array The random files chosen (if possible)
+ * @param  int    $number     The number of random files to select from the specified directory
+ * @param  string $dir        The directory (relative to the root of the site) containing the files to be random chosen from
+ * @param  string $extensions (optional) A space-separated list of extensions, one of which the chosen file must have (case insensitive). Default is ''.
+ * @param  string $reftype    (optional) One of: absolute, filename, hyperlink, relative, or url.  Default is 'relative'.
+ * @param  array  $exclusions (optional) Filenames to exclude from consideration as a random file
+ * @return array  The random files chosen (if possible)
  */
 function c2c_random_files( $number, $dir, $extensions = '', $reftype = 'relative', $exclusions = array() ) {
-	$number = intval( $number );
+	$number     = absint( $number );
 	$exclusions = (array) $exclusions;
-	$files = array();
+	$files      = array();
 	for ( $i = 0; $i < $number; $i++ ) {
 		$f = c2c_random_file( $dir, $extensions, $reftype, $exclusions );
-		if ( !$f )
+		if ( ! $f ) {
 			break;
-		$files[] = $f;
+		}
+		$files[]      = $f;
 		$exclusions[] = $f;
 	}
 	return $files;
 }
+
 add_filter( 'c2c_random_files', 'c2c_random_files', 10, 5 );
+
 endif;

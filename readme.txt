@@ -1,33 +1,34 @@
 === Random File ===
 Contributors: coffee2code
-Donate link: http://coffee2code.com/donate
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ARCFJ9TX3522
 Tags: random, file, coffee2code
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 2.8
-Tested up to: 3.5
-Stable tag: 1.7.1
-Version: 1.7.1
+Tested up to: 3.8
+Stable tag: 1.8
 
 Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
 
 == Description ==
 
-Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
+This plugin provides template tags that allow you to retrieve the name, path (relative or absolute), url, or fully marked-up link to a randomly chosen file or files in a specified directory.
 
-Useful for displaying random images/logos or including text from random files onto your site (writing excerpts, multi-line quotes, etc).
+Arguments to the functions permit you to specify limit what file(s) can be randomly selected based on a given set of file extensions. You can also explicitly specify files that should not be randomly selected.
+
+This functionality can be useful for displaying random images/logos or including text from random files onto your site (writing excerpts, multi-line quotes, etc). Other ideas: random ads, random CSS files, random theme template selection.
 
 Notes:
 
 * If you want to actually display the name of the random file, be sure to 'echo' the results:
-`<?php echo c2c_random_file('/random'); ?>`
+`<?php echo c2c_random_file( '/random' ); ?>`
 
 * Unless you limit the file search to only include a particular extension (via `$extensions` argument), all files in the specified `$dir` will be under consideration for random selection
 
 * Can be run inside or outside of "the loop"
 
-Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Plugin Directory Page](http://wordpress.org/extend/plugins/random-file/) | [Author Homepage](http://coffee2code.com)
+Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Plugin Directory Page](http://wordpress.org/plugins/random-file/) | [Author Homepage](http://coffee2code.com)
 
 
 == Installation ==
@@ -114,19 +115,19 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 
 * Include random logo or image on your site:
 
-    `<img alt="logo" class="logo" src="<?php echo c2c_random_file('/wp-content/images/logos/'); ?>" />`
+    `<img alt="logo" class="logo" src="<?php echo c2c_random_file( 'wp-content/images/logos/' ); ?>" />`
 
 * Insert text from a random file (i.e. for random multi-line quotes) (Apache web-server only, probably):
 
     `
-<blockquote class="todayquote">
-   <?php virtual(c2c_random_file("/quotes/", "txt")); ?>
-</blockquote>
+<div class="todayquote"><pre>
+   <?php virtual( c2c_random_file( 'quotes/', 'txt' ) ); ?>
+</pre></div>
 `
 
 * If you wanted to source a random .php file:
 
-    `<?php include(c2c_random_file('/randomphp', 'php')); ?>`
+    `<?php include( c2c_random_file( '/randomphp', 'php' ) ); ?>`
 
 * List 5 random files:
 
@@ -181,7 +182,19 @@ Do:
 `<?php $files = apply_filters( 'c2c_random_files', 5, 'wp-content/randomfiles' ); ?>`
 
 
+
 == Changelog ==
+
+= 1.8 (2014-01-11) =
+* Add unit tests
+* Fix bug to actually permit multiple extensions to be specified
+* Change casting $number from intval() to absint() in c2c_random_files()
+* Minor code changes (spacing, bracing)
+* Note compatibility through WP 3.8+
+* Update copyright date (2014)
+* Minor readme.txt tweaks
+* Change donate link
+* Add banner
 
 = 1.7.1 =
 * Add check to prevent execution of code if file is directly accessed
@@ -256,6 +269,9 @@ Do:
 
 
 == Upgrade Notice ==
+
+= 1.8 =
+Recommended minor update: fixed bug which prevented specified multiple file extensions from working; added unit tests; noted compatibility through WP 3.8+
 
 = 1.7.1 =
 Trivial update: noted compatibility through WP 3.5+
