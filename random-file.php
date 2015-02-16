@@ -1,35 +1,33 @@
 <?php
 /**
+ * Plugin Name: Random File
+ * Version:     1.8.1
+ * Plugin URI:  http://coffee2code.com/wp-plugins/random-file/
+ * Author:      Scott Reilly
+ * Author URI:  http://coffee2code.com/
+ * License:     GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Description: Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
+ *
+ * Compatible with WordPress 2.8 through 4.1+.
+ *
+ * =>> Read the accompanying readme.txt file for instructions and documentation.
+ * =>> Also, visit the plugin's homepage for additional information and updates.
+ * =>> Or visit: https://wordpress.org/plugins/random-file/
+ *
+ * TODO:
+ * - Add widget
+ * - Facilitate running a randomly chosen .php file
+ * - Facilitate inlining randomly chosen file (any, or at least: .txt, .css, .js, .php, .html)
+ * - Facilitate displaying randomly chosen image
+ *
  * @package Random_File
  * @author Scott Reilly
- * @version 1.8
+ * @version 1.8.1
  */
-/*
-Plugin Name: Random File
-Version: 1.8
-Plugin URI: http://coffee2code.com/wp-plugins/random-file/
-Author: Scott Reilly
-Author URI: http://coffee2code.com/
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Description: Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
-
-Compatible with WordPress 2.8 through 3.8+.
-
-=>> Read the accompanying readme.txt file for instructions and documentation.
-=>> Also, visit the plugin's homepage for additional information and updates.
-=>> Or visit: http://wordpress.org/plugins/random-file/
-
-TODO:
-	* Add widget
-	* Facilitate running a randomly chosen .php file
-	* Facilitate inlining randomly chosen file (any, or at least: .txt, .css, .js, .php, .html)
-	* Facilitate displaying randomly chosen image
-
-*/
 
 /*
-	Copyright (c) 2004-2014 by Scott Reilly (aka coffee2code)
+	Copyright (c) 2004-2015 by Scott Reilly (aka coffee2code)
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License

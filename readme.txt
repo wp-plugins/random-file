@@ -5,8 +5,8 @@ Tags: random, file, coffee2code
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 2.8
-Tested up to: 3.8
-Stable tag: 1.8
+Tested up to: 4.1
+Stable tag: 1.8.1
 
 Retrieve the name, path, or link to a randomly chosen file or files in a specified directory.
 
@@ -28,7 +28,7 @@ Notes:
 
 * Can be run inside or outside of "the loop"
 
-Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Plugin Directory Page](http://wordpress.org/plugins/random-file/) | [Author Homepage](http://coffee2code.com)
+Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Plugin Directory Page](https://wordpress.org/plugins/random-file/) | [Author Homepage](http://coffee2code.com)
 
 
 == Installation ==
@@ -42,7 +42,7 @@ Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/random-file/) | [Plug
 
 = Does this plugin do dynamic random rotation within a loaded page (i.e. randomly rotating images within a loaded page)? =
 
-No.  This plugin only selects a random file when the page is loaded.  Once loaded, it does not currently add any dynamic functionality to automatically retrieve another random file on its own.
+No. This plugin only selects a random file when the page is loaded. Once loaded, it does not currently add any dynamic functionality to automatically retrieve another random file on its own.
 
 
 == Template Tags ==
@@ -63,16 +63,16 @@ This retrieves the name, path, or link to a specified number of randomly chosen 
 The number of random files to select from the specified directory. If less files are present in the specified directory, then all files in the directory will be returned (but will be listed in random order).
 
 * `$dir`
-The directory to search for a random file.  The directory must exist at the directory structure level of your WordPress installation or below. (i.e., if your site is installed on your server at `/usr/local/htdocs/yoursite/www/journal/`, then the directory of random files you specified will assume that as its base... so a value of `'randomfiles'` would be assumed to actually be: `/usr/local/htdocs/yoursite/www/journal/randomfiles/`)
+The directory to search for a random file. The directory must exist at the directory structure level of your WordPress installation or below. (i.e., if your site is installed on your server at `/usr/local/htdocs/yoursite/www/journal/`, then the directory of random files you specified will assume that as its base... so a value of `'randomfiles'` would be assumed to actually be: `/usr/local/htdocs/yoursite/www/journal/randomfiles/`)
 
 * `$extensions`
-Optional argument.  A space-separated list of extensions (case insensitive), i.e. 'jpg gif png jpeg'.
+Optional argument. A space-separated list of extensions (case insensitive), i.e. 'jpg gif png jpeg'.
 
 * `$reftype`
-Optional argument.  Can be one of the following: 'relative' (which is the default), 'absolute', 'url', 'filename', 'hyperlink'.  See Examples section for more details and examples.
+Optional argument. Can be one of the following: 'relative' (which is the default), 'absolute', 'url', 'filename', 'hyperlink'. See Examples section for more details and examples.
 
 * `$exclusions`
-Optional argument.  If specified, MUST be an array of filenames to exclude from consideration as a random file.
+Optional argument. If specified, MUST be an array of filenames to exclude from consideration as a random file.
 
 = Examples =
 
@@ -85,7 +85,7 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 
     `/journal/random/randomfile.txt`
 
-	[This is the default setting as it is the most applicable.  Relative referencing is necessary if the random file is to be used as an argument to include() or virtual().  It's also a valid way to reference a file for A HREF= and IMG SRC= linking.]
+	[This is the default setting as it is the most applicable. Relative referencing is necessary if the random file is to be used as an argument to include() or virtual(). It's also a valid way to reference a file for A HREF= and IMG SRC= linking.]
 
     `$reftype = 'absolute'`
 
@@ -119,10 +119,10 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 
 * Insert text from a random file (i.e. for random multi-line quotes) (Apache web-server only, probably):
 
-    `
-<div class="todayquote"><pre>
+`
+<div class="todayquote">
    <?php virtual( c2c_random_file( 'quotes/', 'txt' ) ); ?>
-</pre></div>
+</div>
 `
 
 * If you wanted to source a random .php file:
@@ -131,19 +131,21 @@ Optional argument.  If specified, MUST be an array of filenames to exclude from 
 
 * List 5 random files:
 
-	`<ul>
+`
+<ul>
 	<?php
 		$random_files = c2c_random_files( 5, 'wp-content/files' );
 		foreach ( $random_files as $f ) {
 			echo "<li>$f</li>";
 		}
 	?>
-	</ul>`
+</ul>
+`
 
 
 == Filters ==
 
-The plugin exposes two filters for hooking.  Typically, customizations utilizing these hooks would be put into your active theme's functions.php file, or used by another plugin.
+The plugin exposes two filters for hooking. Typically, customizations utilizing these hooks would be put into your active theme's functions.php file, or used by another plugin.
 
 = c2c_random_file (filter) =
 
@@ -184,6 +186,14 @@ Do:
 
 
 == Changelog ==
+
+= 1.8.1 (2015-02-16) =
+* Minor plugin header reformatting
+* Change documentation links to wp.org to be https
+* Minor readme space formatting changes
+* Note compatibility through WP 4.1+
+* Update copyright date (2015)
+* Add plugin icon
 
 = 1.8 (2014-01-11) =
 * Add unit tests
@@ -269,6 +279,9 @@ Do:
 
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+Trivial update: noted compatibility through WP 4.1+ and updated copyright date (2015)
 
 = 1.8 =
 Recommended minor update: fixed bug which prevented specified multiple file extensions from working; added unit tests; noted compatibility through WP 3.8+
